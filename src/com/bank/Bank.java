@@ -4,51 +4,77 @@ import java.util.ArrayList;
 
 public class Bank {
 
+    //create different account types, User is one, just a regular person using the bank(add Fund, Company)
+    //different account types should have different fees,  ways of interacting with account as well as parameters
+    //
+
     private String bankName;
-    private ArrayList<User> users = new ArrayList();
+    private ArrayList<AccountHolder> accountHolders = new ArrayList();
 
     public Bank(String bankName) {
         this.bankName = bankName;
+        this.accountHolders = new ArrayList<>();
     }
 
-    public void addUser(String password,
-                        String name,
-                        String address,
-                        String phoneNumber,
-                        String email,
-                        String secretQuestion,
-                        String answerToSecretQuestion
-                        ){
+    public void addPrivate(String name) {
 
-        User newUser = new User(password, name, address, phoneNumber, email, secretQuestion, answerToSecretQuestion);
-        users.add(newUser);
+        accountHolders.add(new UserAccountHolder(name));
 
     }
-    public void addUser(User user){
-        users.add(user);
+
+    public void addBusiness(String name) {
+        accountHolders.add(new Business(name));
+
     }
 
-    public double totalAmountOfUser(String userId){
-        for (User user : users) {
-            if(user.getId().equals(userId)){
+    public void addFund(String name) {
+        accountHolders.add(new Fund(name));
+    }
 
-              return  user.getAccountsBalance();
+    public double usersBalance(String nameOnAccount){
+        for (AccountHolder accountHolder : accountHolders){
+            if(accountHolder.name.equals(nameOnAccount)){
+                return accountHolder.getAccountsBalance();
             }
-
         }
-
         return -1;
     }
 
-    public void addMoneyToUser(String userId, long accountId, double amountOfMoney){
-        for (User user : users){
-            if(user.getId().equals(userId)){
-                user.addMoney(accountId, amountOfMoney);
+    public void printUser(String fullName) {
+        for (AccountHolder accountHolder : accountHolders){
+            if(accountHolder.name.equals(fullName)){
+                System.out.println(accountHolder);
+            }
+        }
+    }
+
+
+
+    public void addMoneyToUser(String name, double amountToAdd) {
+        for (AccountHolder accountHolder : accountHolders) {
+            if (accountHolder.name.equals(name)) {
+                accountHolder.addMoney(amountToAdd);
+            }
+        }
+    }
+
+    public void withdrawMoneyFromAccount(String name, double amountOfMoney) {
+        for (AccountHolder accountHolder : accountHolders) {
+            if (accountHolder.name.equals(name)) {
+                accountHolder.withdrawMoney(amountOfMoney);
             }
         }
     }
 
     public String getBankName() {
         return bankName;
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "bankName='" + bankName + '\'' +
+                ", accountHolders=" + accountHolders +
+                '}';
     }
 }

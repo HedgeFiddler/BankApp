@@ -3,9 +3,9 @@ package com.bank;
 public class Account {
     private long accountNumber;
     private double balance;
-    private String currency;
+    private Currency currency;
 
-    public Account(String currency) {
+    public Account(Currency currency) {
         this.balance = 0;
         this.accountNumber = 10000000 + (long) (Math.random() * 1000000L);
         this.currency = currency;
@@ -14,6 +14,10 @@ public class Account {
     public void addMoney(double amountToAdd){
         this.balance += amountToAdd;
 
+    }
+
+    public void withdrawMoney(double amountOfMoney) {
+        this.balance -= amountOfMoney;
     }
 
     public long getAccountNumber() {
@@ -32,11 +36,11 @@ public class Account {
         this.balance = balance;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
